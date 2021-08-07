@@ -1,17 +1,24 @@
 <?php
 
+use App\Events\PostCreated;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('store', function () {
+
+    $user = User::first();
+
+    $post = $user->posts()->create([
+        'title' => Str::random(20),
+        'body' => Str::random(100)
+    ]);
+
+    event(new PostCreated($post));
+
+    return 'OK';
+});
 
 Route::get('/', function () {
     return view('welcome');
