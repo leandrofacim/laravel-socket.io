@@ -1,6 +1,9 @@
 <?php
 
 use App\Events\PostCreated;
+use App\Http\Controllers\{
+    SiteController
+};
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +23,8 @@ Route::get('store', function () {
     return 'OK';
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SiteController::class, 'index']);
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
